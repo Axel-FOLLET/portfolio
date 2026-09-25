@@ -1,0 +1,1651 @@
+/*
+    Convention d'écriture : BEM
+    bloc            .project-card
+    élément         .project-card__title
+    modificateur    .project-card--placeholder
+*/
+
+
+/* -------------------- COULEURS -------------------- */
+
+/*
+    Mêmes couleurs que le site CV, mais inversées :
+    le rouge devient dominant et le bleu devient secondaire.
+*/
+:root {
+    --red: #E1001A;
+    --blue: #0D0A9B;
+    --white: #FFFFFF;
+
+    /* Voile blanc léger pour les cartes posées sur le rouge */
+    --veil: rgba(255, 255, 255, 0.07);
+    --veil-strong: rgba(255, 255, 255, 0.13);
+}
+
+
+/* -------------------- BASE -------------------- */
+
+* {
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    margin: 0;
+
+    background-color: var(--red);
+    color: var(--white);
+
+    font-family: Avenir, "Avenir Next", sans-serif;
+    line-height: 1.6;
+
+    overflow-x: hidden;
+}
+
+
+img {
+    max-width: 100%;
+}
+
+
+h1,
+h2,
+h3 {
+    line-height: 1.1;
+}
+
+
+a {
+    color: var(--white);
+}
+
+
+/* Visible au clavier sur tous les éléments interactifs */
+a:focus-visible,
+button:focus-visible,
+select:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid var(--white);
+    outline-offset: 4px;
+}
+
+
+/* Lien caché qui apparaît au premier appui sur Tab */
+.skip-link {
+    position: absolute;
+
+    top: -60px;
+    left: 16px;
+
+    z-index: 2000;
+
+    padding: 10px 16px;
+
+    background-color: var(--blue);
+    color: var(--white);
+
+    transition: top 0.2s;
+}
+
+
+.skip-link:focus {
+    top: 12px;
+}
+
+
+/* Texte lu par les lecteurs d'écran mais invisible à l'écran */
+.visually-hidden {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    overflow: hidden;
+
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+
+/* -------------------- NAVIGATION -------------------- */
+
+.header {
+    width: 100%;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 1000;
+
+    background-color: var(--red);
+}
+
+
+.header__nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 24px 48px;
+}
+
+
+.header__identity {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.header__photo {
+    width: 40px;
+    height: 40px;
+
+    object-fit: cover;
+    object-position: top;
+
+    border-radius: 50%;
+}
+
+
+.header__logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 0.15rem;
+
+    text-decoration: none;
+}
+
+
+.header__links {
+    display: flex;
+
+    gap: 32px;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+
+.header__link {
+    padding-bottom: 4px;
+
+    border-bottom: 3px solid transparent;
+
+    text-decoration: none;
+
+    transition: border-color 0.3s;
+}
+
+
+.header__link:hover {
+    border-bottom-color: var(--blue);
+}
+
+
+/* Page en cours : le visiteur sait toujours où il se trouve */
+.header__link[aria-current="page"] {
+    border-bottom-color: var(--white);
+
+    font-weight: bold;
+}
+
+
+/* Bouton menu, visible uniquement sur téléphone */
+.header__toggle {
+    display: none;
+
+    padding: 8px 14px;
+
+    border: 1px solid var(--white);
+
+    background-color: transparent;
+    color: var(--white);
+
+    font-family: inherit;
+    font-size: 0.9rem;
+
+    cursor: pointer;
+}
+
+
+/* -------------------- CHOIX DE LA LANGUE -------------------- */
+
+.language-select {
+    padding: 6px 8px;
+
+    border: 1px solid var(--white);
+
+    background-color: var(--red);
+    color: var(--white);
+
+    font-family: inherit;
+    font-size: 0.85rem;
+
+    cursor: pointer;
+}
+
+
+.language-select:hover {
+    border-color: var(--blue);
+}
+
+
+/* -------------------- SECTIONS -------------------- */
+
+.section {
+    position: relative;
+
+    padding: 100px 8%;
+}
+
+
+.section__eyebrow {
+    margin: 0 0 10px;
+
+    font-size: 0.9rem;
+    letter-spacing: 0.1rem;
+}
+
+
+.section__title {
+    margin: 0 0 30px;
+
+    font-size: 3rem;
+}
+
+
+.section__intro {
+    max-width: 760px;
+
+    margin: 0 0 40px;
+}
+
+
+/* Les trois barres bleues d'accent, comme les barres rouges du CV */
+.bars {
+    display: flex;
+    flex-direction: column;
+
+    gap: 9px;
+
+    margin: 40px 0 45px;
+}
+
+
+.bars__bar {
+    display: block;
+
+    height: 12px;
+
+    background-color: var(--blue);
+}
+
+
+.bars__bar:nth-child(1) {
+    width: 32%;
+}
+
+
+.bars__bar:nth-child(2) {
+    width: 52%;
+}
+
+
+.bars__bar:nth-child(3) {
+    width: 72%;
+}
+
+
+/* -------------------- BOUTONS -------------------- */
+
+.button {
+    display: inline-block;
+
+    padding: 14px 24px;
+
+    border: 1px solid var(--white);
+
+    background-color: transparent;
+    color: var(--white);
+
+    font-family: inherit;
+    font-size: 1rem;
+    text-align: center;
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        transform 0.3s ease;
+}
+
+
+.button:hover {
+    background-color: var(--white);
+    color: var(--red);
+
+    transform: translateY(-3px);
+}
+
+
+/* Bouton principal : rempli en bleu */
+.button--primary {
+    border-color: var(--blue);
+
+    background-color: var(--blue);
+}
+
+
+.button--primary:hover {
+    border-color: var(--white);
+}
+
+
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 15px;
+
+    margin-top: 30px;
+}
+
+
+/* -------------------- ACCUEIL -------------------- */
+
+.hero {
+    min-height: calc(100vh - 80px);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 60px 8% 100px;
+}
+
+
+.hero__text {
+    width: 52%;
+}
+
+
+.hero__title {
+    margin: 10px 0;
+
+    font-size: 6rem;
+    line-height: 0.9;
+    letter-spacing: -0.2rem;
+
+    text-transform: uppercase;
+}
+
+
+.hero__catchphrase {
+    margin: 30px 0 20px;
+
+    font-size: 1.6rem;
+    font-weight: normal;
+}
+
+
+.hero__intro {
+    max-width: 600px;
+}
+
+
+.hero__visual {
+    width: 40%;
+    height: 520px;
+
+    position: relative;
+}
+
+
+/* Photo encadrée, avec un décalage bleu */
+.portrait {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 260px;
+    aspect-ratio: 3 / 4;
+
+    margin: 0;
+
+    transform: translate(-50%, -50%);
+
+    border: 3px solid var(--white);
+
+    box-shadow: 14px 14px 0 var(--blue);
+}
+
+
+.portrait__image {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: top;
+}
+
+
+/* -------------------- CARTES DE NAVIGATION (ACCUEIL) -------------------- */
+
+.teaser-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 25px;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+
+.teaser {
+    display: block;
+
+    height: 100%;
+
+    padding: 30px;
+
+    border: 1px solid var(--white);
+
+    background-color: var(--blue);
+
+    text-decoration: none;
+
+    transition:
+        transform 0.3s ease,
+        background-color 0.3s ease;
+}
+
+
+.teaser:hover {
+    transform: translateY(-8px);
+
+    background-color: var(--veil-strong);
+}
+
+
+.teaser__number {
+    margin: 0 0 10px;
+
+    font-size: 0.9rem;
+    letter-spacing: 0.1rem;
+}
+
+
+.teaser__title {
+    margin: 0 0 14px;
+
+    font-size: 1.8rem;
+}
+
+
+.teaser__text {
+    margin: 0;
+}
+
+
+/* -------------------- LOGIQUE DU PORTFOLIO -------------------- */
+
+.logic {
+    max-width: 950px;
+
+    padding: 40px;
+
+    border-left: 6px solid var(--blue);
+
+    background-color: var(--veil);
+}
+
+
+.logic__list {
+    margin: 0;
+    padding-left: 22px;
+}
+
+
+.logic__item + .logic__item {
+    margin-top: 12px;
+}
+
+
+/* -------------------- CUBES 3D -------------------- */
+
+/*
+    Tous les cubes utilisent le même système.
+    JavaScript gère directement leur rotation.
+*/
+.cube {
+    width: var(--cube-size);
+    height: var(--cube-size);
+
+    padding: 0;
+
+    border: none;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    background-color: transparent;
+
+    cursor: pointer;
+
+    perspective: 900px;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* Tailles des cubes */
+.cube--large {
+    --cube-size: 170px;
+}
+
+
+.cube--medium {
+    --cube-size: 90px;
+}
+
+
+.cube--small {
+    --cube-size: 65px;
+}
+
+
+.cube--tiny {
+    --cube-size: 45px;
+}
+
+
+/* Cube bleu : bien visible sur le fond rouge */
+.cube--blue {
+    --cube-border: var(--blue);
+
+    --cube-fill: rgba(13, 10, 155, 0.35);
+    --cube-hover: rgba(13, 10, 155, 0.6);
+
+    --cube-glow: rgba(13, 10, 155, 0.5);
+}
+
+
+/* Cube blanc : plus discret */
+.cube--white {
+    --cube-border: var(--white);
+
+    --cube-fill: rgba(255, 255, 255, 0.05);
+    --cube-hover: rgba(255, 255, 255, 0.18);
+
+    --cube-glow: rgba(255, 255, 255, 0.35);
+}
+
+
+/* Objet qui contient les six faces */
+.cube__object {
+    display: block;
+
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    transform-origin: center center;
+
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+
+    will-change: transform;
+}
+
+
+.cube__face {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    border: 2px solid var(--cube-border);
+
+    background-color: var(--cube-fill);
+
+    box-shadow: 0 0 18px var(--cube-glow);
+
+    transition:
+        background-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+.cube:hover .cube__face {
+    background-color: var(--cube-hover);
+
+    box-shadow: 0 0 28px var(--cube-glow);
+}
+
+
+/* Position des six faces : la moitié de la taille du cube */
+.cube__face--front {
+    transform: translateZ(calc(var(--cube-size) / 2));
+}
+
+
+.cube__face--back {
+    transform:
+        rotateY(180deg)
+        translateZ(calc(var(--cube-size) / 2));
+}
+
+
+.cube__face--right {
+    transform:
+        rotateY(90deg)
+        translateZ(calc(var(--cube-size) / 2));
+}
+
+
+.cube__face--left {
+    transform:
+        rotateY(-90deg)
+        translateZ(calc(var(--cube-size) / 2));
+}
+
+
+.cube__face--top {
+    transform:
+        rotateX(90deg)
+        translateZ(calc(var(--cube-size) / 2));
+}
+
+
+.cube__face--bottom {
+    transform:
+        rotateX(-90deg)
+        translateZ(calc(var(--cube-size) / 2));
+}
+
+
+/* -------------------- POSITION DES CUBES -------------------- */
+
+/* Cubes placés autour de la photo (accueil) et du formulaire (contact) */
+.cube--pos-1 {
+    position: absolute;
+
+    top: 4%;
+    left: 6%;
+}
+
+
+.cube--pos-2 {
+    position: absolute;
+
+    top: 8%;
+    right: 4%;
+}
+
+
+.cube--pos-3 {
+    position: absolute;
+
+    bottom: 8%;
+    left: 10%;
+}
+
+
+.cube--pos-4 {
+    position: absolute;
+
+    right: 8%;
+    bottom: 4%;
+}
+
+
+/* Cube principal, au centre de la zone (page Contact) */
+.cube--pos-main {
+    position: absolute;
+
+    top: 40%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+}
+
+
+/* Petit cube décoratif en haut à droite d'une section */
+.cube--corner {
+    position: absolute;
+
+    top: 100px;
+    right: 8%;
+}
+
+
+/* -------------------- PAGE PROJETS -------------------- */
+
+.project-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 40px;
+}
+
+
+.project-card {
+    display: grid;
+    grid-template-columns: 34% 1fr;
+
+    background-color: var(--blue);
+
+    border: 1px solid var(--white);
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease;
+}
+
+
+.project-card:hover {
+    transform: translateY(-6px);
+}
+
+
+/* Zone claire pour que les dessins restent lisibles */
+.project-card__media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 260px;
+
+    margin: 0;
+    padding: 20px;
+
+    background-color: var(--white);
+}
+
+
+.project-card__image {
+    width: 100%;
+    max-height: 260px;
+
+    object-fit: contain;
+}
+
+
+.project-card__body {
+    padding: 32px 36px;
+}
+
+
+.project-card__title {
+    margin: 0 0 20px;
+
+    font-size: 2rem;
+}
+
+
+.project-card__details {
+    margin: 0;
+}
+
+
+.project-card__label {
+    margin-top: 18px;
+
+    font-size: 0.85rem;
+    font-weight: bold;
+    letter-spacing: 0.1rem;
+
+    text-transform: uppercase;
+}
+
+
+.project-card__text {
+    margin: 4px 0 0;
+}
+
+
+.project-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin: 8px 0 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+
+.project-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin-top: 26px;
+}
+
+
+/* Carte d'un futur projet */
+.project-card--placeholder {
+    border-style: dashed;
+
+    background-color: var(--veil);
+}
+
+
+.project-card--placeholder .project-card__media {
+    background-color: transparent;
+}
+
+
+/* Étiquette de technologie */
+.tag {
+    padding: 4px 12px;
+
+    border: 1px solid var(--white);
+
+    font-size: 0.9rem;
+}
+
+
+/* -------------------- PAGE PARCOURS : BANDEAU BLEU -------------------- */
+
+.banner {
+    margin: 0 2%;
+    padding: 60px 6%;
+
+    background-color: var(--blue);
+}
+
+
+.banner__line {
+    width: 100%;
+    height: 3px;
+
+    margin-bottom: 30px;
+
+    background-color: var(--white);
+}
+
+
+.banner__intro {
+    padding: 40px;
+
+    background-color: var(--veil-strong);
+}
+
+
+.banner__title {
+    margin: 0 0 24px;
+
+    font-size: 2.6rem;
+}
+
+
+.banner__text {
+    max-width: 850px;
+
+    margin: 16px 0;
+}
+
+
+.banner__highlight {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+
+/* -------------------- FRISE DE PROGRESSION -------------------- */
+
+.timeline {
+    margin: 50px 0 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+
+.timeline__step {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+
+    gap: 20px;
+
+    padding: 22px 0;
+
+    border-top: 1px solid var(--white);
+}
+
+
+.timeline__number {
+    font-size: 2.4rem;
+    font-weight: bold;
+    line-height: 1;
+}
+
+
+.timeline__title {
+    margin: 0 0 6px;
+
+    font-size: 1.4rem;
+}
+
+
+.timeline__text {
+    max-width: 800px;
+
+    margin: 0;
+}
+
+
+/* -------------------- COMPÉTENCES -------------------- */
+
+.skills {
+    margin-top: 60px;
+}
+
+
+.skills__title {
+    margin: 0 0 24px;
+
+    font-size: 1.5rem;
+    font-weight: normal;
+}
+
+
+.skills__list {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 15px;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+
+.skill {
+    padding: 12px 20px;
+
+    border: 1px solid var(--white);
+
+    background-color: transparent;
+    color: var(--white);
+
+    font-family: inherit;
+    font-size: 1rem;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        transform 0.3s ease;
+}
+
+
+.skill:hover,
+.skill[aria-pressed="true"] {
+    background-color: var(--white);
+    color: var(--blue);
+
+    transform: translateY(-4px);
+}
+
+
+.skills__description {
+    min-height: 130px;
+
+    margin-top: 30px;
+    padding: 28px 32px;
+
+    border: 1px solid var(--white);
+
+    background-color: var(--veil-strong);
+}
+
+
+/* -------------------- FORMATION ET EXPÉRIENCES -------------------- */
+
+.education {
+    max-width: 950px;
+
+    padding: 40px;
+
+    border-left: 6px solid var(--blue);
+
+    background-color: var(--veil);
+}
+
+
+.education + .education {
+    margin-top: 30px;
+}
+
+
+.education__period {
+    margin: 0 0 20px;
+
+    font-size: 0.9rem;
+    letter-spacing: 0.1rem;
+}
+
+
+.education__title {
+    margin: 0 0 8px;
+
+    font-size: 2.2rem;
+}
+
+
+.education__subtitle {
+    margin: 0 0 18px;
+
+    font-size: 1.3rem;
+    font-weight: normal;
+}
+
+
+.education__text {
+    max-width: 760px;
+
+    margin: 12px 0;
+}
+
+
+.experience-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 25px;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+
+.experience {
+    height: 100%;
+
+    padding: 30px 32px;
+
+    border-left: 6px solid var(--blue);
+
+    background-color: var(--veil);
+
+    transition:
+        transform 0.3s ease,
+        background-color 0.3s ease;
+}
+
+
+.experience:hover {
+    transform: translateX(8px);
+
+    background-color: var(--veil-strong);
+}
+
+
+.experience__company {
+    margin: 0 0 6px;
+
+    font-size: 1.8rem;
+}
+
+
+.experience__role {
+    margin: 0 0 6px;
+
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+
+.experience__period {
+    margin: 0 0 14px;
+
+    font-size: 0.9rem;
+}
+
+
+.experience__text {
+    margin: 0 0 14px;
+}
+
+
+.experience__tags {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+
+/* Défis rencontrés et pistes d'amélioration */
+.challenge-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 25px;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+
+.challenge {
+    padding: 30px 32px;
+
+    border: 1px solid var(--white);
+
+    background-color: var(--blue);
+}
+
+
+.challenge__title {
+    margin: 0 0 12px;
+
+    font-size: 1.4rem;
+}
+
+
+.challenge__text {
+    margin: 0;
+}
+
+
+/* -------------------- CONTACT -------------------- */
+
+.contact {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 80px;
+}
+
+
+.contact__main {
+    width: 60%;
+    max-width: 750px;
+}
+
+
+.contact__side {
+    flex: 1;
+
+    position: relative;
+
+    min-height: 520px;
+}
+
+
+.form__row {
+    display: flex;
+
+    gap: 20px;
+}
+
+
+.form__row .form__field {
+    flex: 1;
+}
+
+
+.form__field {
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 25px;
+}
+
+
+.form__label {
+    margin-bottom: 10px;
+
+    font-size: 0.9rem;
+    letter-spacing: 0.05rem;
+}
+
+
+.form__input {
+    width: 100%;
+
+    padding: 15px 16px;
+
+    border: 1px solid var(--white);
+
+    background-color: var(--veil);
+    color: var(--white);
+
+    font-family: inherit;
+    font-size: 1rem;
+
+    transition: background-color 0.3s ease;
+}
+
+
+.form__input:focus {
+    background-color: var(--veil-strong);
+}
+
+
+.form__input--area {
+    resize: vertical;
+}
+
+
+/* Champ anti-spam : invisible pour les humains */
+.form__trap {
+    position: absolute;
+
+    left: -9999px;
+}
+
+
+.form__status {
+    min-height: 1.6em;
+
+    margin: 20px 0 0;
+
+    font-weight: bold;
+}
+
+
+/* Liens (CV, site web, LinkedIn, GitHub) */
+.link-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 14px;
+
+    margin: 45px 0 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+
+.link-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 14px;
+
+    padding: 16px 20px;
+
+    border: 1px solid var(--white);
+
+    background-color: var(--blue);
+
+    text-decoration: none;
+
+    transition:
+        background-color 0.3s ease,
+        transform 0.3s ease;
+}
+
+
+.link-card:hover {
+    background-color: var(--veil-strong);
+
+    transform: translateX(5px);
+}
+
+
+.link-card__label {
+    font-weight: bold;
+}
+
+
+.link-card__hint {
+    font-size: 0.9rem;
+}
+
+
+/* -------------------- PIED DE PAGE -------------------- */
+
+.footer {
+    padding: 50px 8% 40px;
+
+    background-color: var(--blue);
+}
+
+
+.footer__row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    gap: 30px;
+}
+
+
+.footer__title {
+    margin: 0 0 12px;
+
+    font-size: 1.1rem;
+}
+
+
+.footer__list {
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+
+.footer__credits {
+    max-width: 620px;
+
+    margin: 0;
+
+    font-size: 0.9rem;
+}
+
+
+.footer__copyright {
+    margin: 30px 0 0;
+
+    font-size: 0.85rem;
+}
+
+
+/* -------------------- TABLETTE -------------------- */
+
+@media (max-width: 1024px) {
+
+    .header__nav {
+        padding: 20px 32px;
+    }
+
+
+    .header__links {
+        gap: 20px;
+    }
+
+
+    /* -------------------- ACCUEIL -------------------- */
+
+    .hero {
+        flex-direction: column;
+        align-items: flex-start;
+
+        padding: 50px 6% 80px;
+    }
+
+
+    .hero__text,
+    .hero__visual {
+        width: 100%;
+    }
+
+
+    .hero__title {
+        font-size: 5rem;
+    }
+
+
+    .hero__visual {
+        height: 460px;
+
+        margin-top: 40px;
+    }
+
+
+    .teaser-list {
+        grid-template-columns: 1fr;
+    }
+
+
+    /* -------------------- SECTIONS -------------------- */
+
+    .section {
+        padding: 80px 6%;
+    }
+
+
+    /*
+        Sur tablette, les cubes de coin quittent leur position
+        absolue pour éviter de recouvrir le texte.
+    */
+    .cube--corner {
+        position: relative;
+
+        top: auto;
+        right: auto;
+
+        display: block;
+
+        margin: 0 0 28px auto;
+    }
+
+
+    /* -------------------- PROJETS -------------------- */
+
+    .project-card {
+        grid-template-columns: 1fr;
+    }
+
+
+    /* -------------------- PARCOURS -------------------- */
+
+    .banner {
+        margin: 0;
+        padding: 50px 5%;
+    }
+
+
+    .experience-list,
+    .challenge-list {
+        grid-template-columns: 1fr;
+    }
+
+
+    /* -------------------- CONTACT -------------------- */
+
+    .contact {
+        flex-direction: column;
+
+        gap: 50px;
+    }
+
+
+    .contact__main {
+        width: 100%;
+        max-width: none;
+    }
+
+
+    .contact__side {
+        width: 100%;
+
+        min-height: 360px;
+    }
+
+
+    .bars__bar:nth-child(1) {
+        width: 40%;
+    }
+
+
+    .bars__bar:nth-child(2) {
+        width: 60%;
+    }
+
+
+    .bars__bar:nth-child(3) {
+        width: 80%;
+    }
+
+}
+
+
+/* -------------------- TÉLÉPHONE -------------------- */
+
+@media (max-width: 767px) {
+
+    /* -------------------- NAVIGATION -------------------- */
+
+    .header__nav {
+        flex-wrap: wrap;
+
+        padding: 16px 20px;
+    }
+
+
+    .header__toggle {
+        display: block;
+    }
+
+
+    /* Le menu est caché tant que le visiteur n'a pas appuyé sur le bouton */
+    .header__links {
+        display: none;
+
+        flex-direction: column;
+
+        width: 100%;
+
+        gap: 14px;
+
+        padding: 20px 0 10px;
+    }
+
+
+    .header__links--open {
+        display: flex;
+    }
+
+
+    /* -------------------- ACCUEIL -------------------- */
+
+    .hero__title {
+        font-size: 3.4rem;
+        letter-spacing: -0.1rem;
+    }
+
+
+    .hero__catchphrase {
+        font-size: 1.3rem;
+    }
+
+
+    .hero__visual {
+        height: 420px;
+    }
+
+
+    .portrait {
+        width: 200px;
+    }
+
+
+    .cube--large {
+        --cube-size: 120px;
+    }
+
+
+    /* -------------------- SECTIONS -------------------- */
+
+    .section__title {
+        font-size: 2.2rem;
+    }
+
+
+    .project-card__body {
+        padding: 24px 20px;
+    }
+
+
+    .banner__intro,
+    .logic,
+    .education {
+        padding: 26px 20px;
+    }
+
+
+    .banner__title {
+        font-size: 1.9rem;
+    }
+
+
+    .timeline__step {
+        grid-template-columns: 50px 1fr;
+    }
+
+
+    .form__row {
+        flex-direction: column;
+
+        gap: 0;
+    }
+
+}
+
+
+/* -------------------- MOUVEMENT RÉDUIT -------------------- */
+
+/*
+    Si le visiteur a demandé moins d'animations dans son système,
+    les transitions sont supprimées (JavaScript arrête aussi les cubes).
+*/
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+
+    * {
+        transition: none !important;
+    }
+
+}
+
+
+/* -------------------- ANCRES -------------------- */
+
+/* Le menu reste collé en haut : on garde de la place pour lui au défilement */
+#home,
+#projects,
+#journey,
+#contact {
+    scroll-margin-top: 80px;
+}
