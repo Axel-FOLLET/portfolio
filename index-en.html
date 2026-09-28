@@ -22,7 +22,7 @@
     <meta property="og:image" content="https://axel-follet.github.io/portfolio/assets/images/profile.jpg">
 
     <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+    <script type="module" src="script.js"></script>
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -35,7 +35,7 @@
     </script>
 </head>
 
-<body>
+<body class="page">
 
     <!-- Lien pour aller directement au contenu (clavier) -->
     <a class="skip-link" href="#main">Skip to content</a>
@@ -46,6 +46,17 @@
     <header class="header">
 
         <nav class="header__nav" aria-label="Main navigation">
+
+            <button
+                class="header__toggle"
+                id="menu-toggle"
+                type="button"
+                aria-label="Open navigation menu"
+                aria-expanded="false"
+                aria-controls="menu-links"
+            >
+                <span class="header__toggle-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+            </button>
 
             <!-- Identité : photo + initiales + choix langue -->
             <div class="header__identity">
@@ -63,7 +74,7 @@
                 <!-- Chaque page renvoie vers sa page équivalente dans l'autre langue -->
                 <select
                     class="language-select"
-                    onchange="window.location.href=this.value"
+
                     aria-label="Choose the language"
                 >
                     <option value="index.html">FR</option>
@@ -71,18 +82,6 @@
                 </select>
 
             </div>
-
-
-            <!-- Bouton du menu (téléphone uniquement) -->
-            <button
-                class="header__toggle"
-                id="menu-toggle"
-                type="button"
-                aria-expanded="false"
-                aria-controls="menu-links"
-            >
-                Menu
-            </button>
 
 
             <!-- Liens vers les différentes pages -->
@@ -262,7 +261,7 @@
 
         </section>
 
-    
+
         <div id="projects">
 
 
@@ -383,7 +382,7 @@
 
                         <div class="project-card__actions">
                             <a class="button" href="https://github.com/Axel-FOLLET/Axou/tree/5f52f135fe0bb45800351c035b74ff3e00f64e5e/jeu_du_snake" target="_blank" rel="noopener noreferrer">Source code on GitHub</a>
-                            <a class="button" href="https://axel-follet.github.io/website_resume/#projects" target="_blank" rel="noopener noreferrer">Playable version on my website</a>
+                            <button class="button project-card__play" type="button" data-game="snake" data-game-title="Snake">Play</button>
                         </div>
 
                     </div>
@@ -423,7 +422,7 @@
 
                         <div class="project-card__actions">
                             <a class="button" href="https://github.com/Axel-FOLLET/Axou/tree/5f52f135fe0bb45800351c035b74ff3e00f64e5e/jeu_du_pendu" target="_blank" rel="noopener noreferrer">Source code on GitHub</a>
-                            <a class="button" href="https://axel-follet.github.io/website_resume/#projects" target="_blank" rel="noopener noreferrer">Playable version on my website</a>
+                            <button class="button project-card__play" type="button" data-game="pendu" data-game-title="Hangman">Play</button>
                         </div>
 
                     </div>
@@ -457,7 +456,7 @@
 
         </section>
 
-    
+
         </div>
 
         <div id="skills">
@@ -651,7 +650,7 @@
 
         </section>
 
-    
+
         </div>
 
         <div id="contact">
@@ -809,7 +808,7 @@
 
         </section>
 
-    
+
         </div>
 </main>
 
@@ -844,6 +843,49 @@
         </p>
 
     </footer>
+
+    <div
+        id="game-modal"
+        class="game-modal"
+        aria-hidden="true"
+    >
+        <button
+            class="game-modal__backdrop"
+            type="button"
+            data-game-close
+            aria-label="Close game"
+        ></button>
+
+        <div
+            class="game-modal__dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="game-modal-title"
+        >
+            <div class="game-modal__header">
+                <h2 id="game-modal-title">Game</h2>
+
+                <button
+                    id="game-modal-close"
+                    class="game-modal__close"
+                    type="button"
+                    data-game-close
+                    aria-label="Close game"
+                >
+                    ×
+                </button>
+            </div>
+
+            <!-- L'iframe héberge son propre document et ses commandes clavier. Son adresse est choisie au clic ; about:blank décharge le jeu à la fermeture. -->
+            <div class="game-modal__content">
+                <iframe
+                    id="game-frame"
+                    title="Playable game"
+                    src="about:blank"
+                 class="game-modal__frame"></iframe>
+            </div>
+        </div>
+    </div>
 
 </body>
 
